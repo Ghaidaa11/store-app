@@ -1,0 +1,21 @@
+header {
+  background: #333;
+  color: skyblue;
+  padding: 1rem;
+}
+
+footer {
+  background: skyblue;
+  text-align: center;
+  padding: 1rem;
+}
+
+main {
+      flex: 1;                  
+}
+
+.layout-wrapper {
+  min-height: 100vh;            /* Full height of the viewport */
+  display: flex;
+  flex-direction: column;
+}

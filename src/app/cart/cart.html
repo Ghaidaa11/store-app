@@ -1,0 +1,63 @@
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+        <div class="card m-2"
+        *ngFor = 'let product of cartProducts'>
+        <img
+          class="card-img-top"
+          [src]="product.image"
+          alt="Product image"
+          style="height: 200px; object-fit: contain;"
+        />
+        <div class="card-body ">
+          <h5 class="card-title">${{ product.price }}</h5>
+          <div class="mb-3  d-flex">
+            
+            <label class="me-2">Amount: </label>
+            <input 
+            name="selectedAmount-{{product.id}}"
+            [ngModelOptions]="{ standalone: true }"   
+            [(ngModel)]="product.selectedAmount"
+            type="number" class="border" 
+            value={{product.selectedAmount}} 
+            (change)="updateProductsAmount(product, product.selectedAmount)">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col m-2">
+
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="formGroupExampleInput">Full Name</label>
+    <input type="text" [(ngModel)]="name" name="name" #name="ngModel" required minlength="2" class="form-control" id="formGroupExampleInput" placeholder="Andy">
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput2">Address</label>
+    <input type="text" [(ngModel)]="address" name="address" #address="ngModel" required class="form-control" id="formGroupExampleInput2" placeholder="your address">
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput2">Credit Card Number</label>
+    <input type="text" [(ngModel)]="card" name="card" #card="ngModel" required minlength="16" class="form-control" id="formGroupExampleInput2" placeholder="16-digits">
+  </div>
+  <p class="font-weight-light">We'll never share your payment details</p>
+  <button type="submit" [disabled]="form.invalid" class="btn btn-primary">submit</button>
+</form>
+
+
+<div *ngIf="name.invalid || address.invalid || card.invalid">
+  <div *ngIf="name.errors?.['required'] || address.errors?.['required'] || card.errors?.['required']">
+    Please fill all inputs
+  </div>
+  <div *ngIf="card.errors?.['minlength']">
+    The credit card number must contain 16 characters.
+  </div>
+</div>
+    </div>
+  </div>
+  <h1>Total: {{getCartTotal()}}</h1>
+  </div>
+
