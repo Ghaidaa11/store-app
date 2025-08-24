@@ -23,6 +23,13 @@
             type="number" class="border" 
             value={{product.selectedAmount}} 
             (change)="updateProductsAmount(product, product.selectedAmount)">
+            <button (click) = "removeFromCart(product)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+  </svg>
+
+            </button>
           </div>
         </div>
       </div>
@@ -30,32 +37,66 @@
     </div>
     <div class="col m-2">
 
-<form #form="ngForm" (ngSubmit)="onSubmit()">
+<form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
   <div class="form-group">
-    <label for="formGroupExampleInput">Full Name</label>
-    <input type="text" [(ngModel)]="name" name="name" #name="ngModel" required minlength="2" class="form-control" id="formGroupExampleInput" placeholder="Andy">
+    <label for="fullName">Full Name</label>
+    <input
+      type="text"
+      id="fullName"
+      class="form-control"
+      placeholder="Andy"
+      [(ngModel)]="fullName"
+      name="fullName"
+      #fullNameModel="ngModel"
+      required
+      minlength="2"
+    />
+    <div *ngIf="fullNameModel.invalid && (fullNameModel.dirty || fullNameModel.touched)" class="text-danger">
+      <div *ngIf="fullNameModel.errors?.['required']">Full name is required.</div>
+      <div *ngIf="fullNameModel.errors?.['minlength']">Full name must be at least 2 characters.</div>
+    </div>
   </div>
+
   <div class="form-group">
-    <label for="formGroupExampleInput2">Address</label>
-    <input type="text" [(ngModel)]="address" name="address" #address="ngModel" required class="form-control" id="formGroupExampleInput2" placeholder="your address">
+    <label for="address">Address</label>
+    <input
+      type="text"
+      id="address"
+      class="form-control"
+      placeholder="Your address"
+      [(ngModel)]="address"
+      name="address"
+      #addressModel="ngModel"
+      required
+    />
+    <div *ngIf="addressModel.invalid && (addressModel.dirty || addressModel.touched)" class="text-danger">
+      <div *ngIf="addressModel.errors?.['required']">Address is required.</div>
+    </div>
   </div>
+
   <div class="form-group">
-    <label for="formGroupExampleInput2">Credit Card Number</label>
-    <input type="text" [(ngModel)]="card" name="card" #card="ngModel" required minlength="16" class="form-control" id="formGroupExampleInput2" placeholder="16-digits">
+    <label for="cardNumber">Credit Card Number</label>
+    <input
+      type="text"
+      id="cardNumber"
+      class="form-control"
+      placeholder="16-digits"
+      [(ngModel)]="card"
+      name="card"
+      #cardModel="ngModel"
+      required
+      minlength="16"
+    />
+    <div *ngIf="cardModel.invalid && (cardModel.dirty || cardModel.touched)" class="text-danger">
+      <div *ngIf="cardModel.errors?.['required']">Credit card number is required.</div>
+      <div *ngIf="cardModel.errors?.['minlength']">Credit card number must be 16 digits.</div>
+    </div>
   </div>
+
   <p class="font-weight-light">We'll never share your payment details</p>
-  <button type="submit" [disabled]="form.invalid" class="btn btn-primary">submit</button>
+
+  <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Submit</button>
 </form>
-
-
-<div *ngIf="name.invalid || address.invalid || card.invalid">
-  <div *ngIf="name.errors?.['required'] || address.errors?.['required'] || card.errors?.['required']">
-    Please fill all inputs
-  </div>
-  <div *ngIf="card.errors?.['minlength']">
-    The credit card number must contain 16 characters.
-  </div>
-</div>
     </div>
   </div>
   <h1>Total: {{getCartTotal()}}</h1>

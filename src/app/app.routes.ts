@@ -10,6 +10,5 @@ export const routes: Routes = [{
     children: [
         { path: '', component: ProductsList },
         { path: 'cart', component: Cart},
-        { path: 'details', component: ProductItem}
     ]
 }];

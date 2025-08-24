@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { ProductsService } from '../services/products-service';
 import { Product } from '../models/Product';
 
@@ -16,6 +16,11 @@ export class Cart implements OnInit {
 
   cartProducts: Product[] = []
 
+  fullName?: FormControl;
+  address?: FormControl;
+  card?: FormControl;
+ 
+
   constructor(private productService: ProductsService) {}
 
   ngOnInit(): void {
@@ -24,6 +29,10 @@ export class Cart implements OnInit {
 
 
   updateProductsAmount(product: Product, updatedAmount: number) {
+
+    if(updatedAmount<=0) {
+      return this.cartProducts = this.cartProducts.filter(p => p.id != product.id)
+    }
 
     this.cartProducts.map(p => {
       
@@ -52,5 +61,9 @@ export class Cart implements OnInit {
 
   onSubmit(): void {
     alert("data submitted correctly.")
+  }
+
+  removeFromCart(product:Product) {
+    return this.cartProducts = this.cartProducts.filter(p => p.id != product.id)
   }
 }

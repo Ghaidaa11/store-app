@@ -1,34 +1,34 @@
-<div class="container m-2" *ngIf="product">
+<div class="container m-2" *ngIf="productItem">
   <div class="row">
     <div class="col">
         <img
           class="card-img-top"
-          [src]="product.image"
-          alt="Product image"
+          [src]="productItem.image"
+          alt="productItem image"
           style="height: 200px; object-fit: contain;"
         />
     </div>
     <div class="col">
-        <h1>{{product.category}}</h1>
-        <p>{{product.price}}</p>
-        <p>{{product.description}}</p>
+        <h1>{{productItem.category}}</h1>
+        <p>{{productItem.price}}</p>
+        <p>{{productItem.description}}</p>
 
         <div class="mb-3">
             
             <select
               class="form-select"
-              id="quantity-{{product.id}}"
-              [(ngModel)]="product.selectedAmount"
+              id="quantity-{{productItem.id}}"
+              [(ngModel)]="productItem.selectedAmount"
             >
               <option *ngFor="let qty of [1,2,3]" [value]="qty">
                 {{ qty }}
               </option>
             </select>
           </div>
-          <button *ngIf="product" (click)="addProductToCart(product!, product.selectedAmount || 1)" class="btn btn-primary mt-auto">Add to cart</button>
+          <button *ngIf="productItem" (click)="addProductToCart(productItem!, productItem.selectedAmount || 1)" class="btn btn-primary mt-auto">Add to cart</button>
 
           <h6>
-              <a routerLink="/">Back to products list</a>
+              <button (click) ="toggleBackwardToList()">Back to products list</button>
           </h6>
     </div>
   </div>

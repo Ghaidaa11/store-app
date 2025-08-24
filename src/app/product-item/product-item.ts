@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../models/Product';
 import { ProductsService } from '../services/products-service';
 import { CommonModule } from '@angular/common';
@@ -15,8 +15,11 @@ import { Router, RouterModule } from '@angular/router';
 export class ProductItem {
 
   product: Product;
+  
+  @Input() productItem: Product | null = null;
+  @Output() backward = new EventEmitter<void>();
 
-  constructor(private productService: ProductsService,
+constructor(private productService: ProductsService,
     private router: Router
   ) {
     const nav = this.router.getCurrentNavigation();
@@ -26,6 +29,10 @@ export class ProductItem {
 
    addProductToCart(product: Product, selectedAmount: number): void {
     this.productService.addProductToCart(product, selectedAmount)
+  }
+
+  toggleBackwardToList(): void {
+    this.backward.emit()
   }
 
 }

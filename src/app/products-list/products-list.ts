@@ -1,15 +1,15 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { ProductsService } from '../services/products-service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../models/Product';
-import { Router } from '@angular/router';
+import { ProductItem } from '../product-item/product-item';
 
 
 @Component({
   standalone: true,
   selector: 'app-products-list',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ProductItem],
   templateUrl: './products-list.html',
   styleUrl: './products-list.css'
 })
@@ -19,11 +19,9 @@ export class ProductsList implements OnInit {
 
   cartProducts: Product[] = []
 
-  // selectedProduct?: Product;
+  selectedProduct?: Product;
 
-  constructor(private productService: ProductsService,
-    private router: Router
-  ) { }
+  constructor(private productService: ProductsService) { }
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(data => {
@@ -36,10 +34,10 @@ export class ProductsList implements OnInit {
   }
 
  showProductDetails(product: Product): void {
-    this.router.navigate(['/details'], { state: { data: product} });
+    this.selectedProduct = product
   }
-
-  detailsPage(product: Product): void {
-    
-  }
+  
+onBackToList(): void {
+  this.selectedProduct = undefined; 
+}
  }

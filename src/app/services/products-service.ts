@@ -30,6 +30,7 @@ export class ProductsService {
 
       })
     }
+    alert("The product has been added correctly.")
     console.log("added",this.cartProducts )
   }
 

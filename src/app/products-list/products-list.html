@@ -1,5 +1,5 @@
 
-<div class="container m-2">
+<div class="container m-2" *ngIf="!selectedProduct">
   <div class="row">
     <div
       *ngFor="let product of products"
@@ -12,7 +12,7 @@
           alt="Product image"
           style="height: 200px; object-fit: contain;"
           (click)="showProductDetails(product)"
-        />
+        />        
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">${{ product.price }}</h5>
           <p class="card-text" style="flex-grow: 1;">
@@ -42,4 +42,10 @@
     </div>
   </div>
 </div>
+
+<app-product-item
+  *ngIf="selectedProduct"
+  (backward) = "onBackToList()"
+  [productItem]="selectedProduct">
+</app-product-item>
 
