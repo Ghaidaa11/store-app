@@ -50,6 +50,7 @@
       #fullNameModel="ngModel"
       required
       minlength="2"
+      (ngModelChange)="validateFullName()"
     />
     <div *ngIf="fullNameModel.invalid && (fullNameModel.dirty || fullNameModel.touched)" class="text-danger">
       <div *ngIf="fullNameModel.errors?.['required']">Full name is required.</div>
@@ -68,6 +69,7 @@
       name="address"
       #addressModel="ngModel"
       required
+      (ngModelChange)="validateAddress()"
     />
     <div *ngIf="addressModel.invalid && (addressModel.dirty || addressModel.touched)" class="text-danger">
       <div *ngIf="addressModel.errors?.['required']">Address is required.</div>
@@ -77,7 +79,9 @@
   <div class="form-group">
     <label for="cardNumber">Credit Card Number</label>
     <input
-      type="text"
+      type="tel"
+      inputmode="numeric" 
+      pattern="\d{16}"
       id="cardNumber"
       class="form-control"
       placeholder="16-digits"
@@ -86,6 +90,9 @@
       #cardModel="ngModel"
       required
       minlength="16"
+      maxlength="16"
+      (ngModelChange)="validateCard()"
+     oninput="this.value = this.value.replace(/\D/g, '')"
     />
     <div *ngIf="cardModel.invalid && (cardModel.dirty || cardModel.touched)" class="text-danger">
       <div *ngIf="cardModel.errors?.['required']">Credit card number is required.</div>

@@ -16,9 +16,15 @@ export class Cart implements OnInit {
 
   cartProducts: Product[] = []
 
-  fullName?: FormControl;
-  address?: FormControl;
-  card?: FormControl;
+  fullName: string = '';
+  address: string = '';
+  card: string = '';
+
+
+  fullNameError: string = '';
+  addressError: string = '';
+  cardError: string = '';
+
  
 
   constructor(private productService: ProductsService) {}
@@ -31,6 +37,7 @@ export class Cart implements OnInit {
   updateProductsAmount(product: Product, updatedAmount: number) {
 
     if(updatedAmount<=0) {
+      alert("The product will be removed from the cart")
       return this.cartProducts = this.cartProducts.filter(p => p.id != product.id)
     }
 
@@ -64,6 +71,34 @@ export class Cart implements OnInit {
   }
 
   removeFromCart(product:Product) {
+    alert("The product will be removed from the cart")
     return this.cartProducts = this.cartProducts.filter(p => p.id != product.id)
+ 
   }
+
+  validateFullName() {
+    if (this.fullName.length > 0 && this.fullName.length < 2) {
+      this.fullNameError = 'Full name must be at least 2 characters.';
+    } else {
+      this.fullNameError = '';
+    }
+  }
+
+  validateAddress() {
+    if (!this.address.trim()) {
+      this.addressError = 'Address cannot be empty.';
+    } else {
+      this.addressError = '';
+    }
+  }
+
+  validateCard() {
+    const cardNumberOnlyDigits = /^\d{16}$/;
+    if (!cardNumberOnlyDigits.test(this.card)) {
+      this.cardError = 'Credit card number must be exactly 16 digits.';
+    } else {
+      this.cardError = '';
+    }
+  }
+  
 }
